@@ -11,7 +11,7 @@
             "type": "java",
             "name": "Spring Boot-SpringbootRestApiApplication<springboot-rest-api>",
             "request": "launch",
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/springboot-rest-api",
             "mainClass": "ccat.java.springboot.SpringbootRestApiApplication",
             "projectName": "springboot-rest-api",
             "args": "",

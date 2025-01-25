@@ -1,11 +1,18 @@
 package ccat.springboot.bean;
 
-public class Student {
+import java.io.Serializable;
+
+public class Student implements Serializable {
     private int id;
     private String firstName;
     private String lastName;
 
-    Student(int id, String firstName, String lastName) {
+    // To fully adhere to JavaBean conventions, we need to have an empty
+    // constructor.
+    public Student() {
+    }
+
+    public Student(int id, String firstName, String lastName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
