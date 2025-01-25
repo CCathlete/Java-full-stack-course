@@ -1,0 +1,21 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "SpringbootRestApiApplication",
+            "request": "launch",
+            "mainClass": "ccat.springboot.SpringbootRestApiApplication",
+            "projectName": "springboot-rest-api"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-SpringbootRestApiApplication<springboot-rest-api>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "ccat.java.springboot.SpringbootRestApiApplication",
+            "projectName": "springboot-rest-api",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
