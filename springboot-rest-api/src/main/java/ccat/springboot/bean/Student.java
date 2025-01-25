@@ -26,7 +26,7 @@ public class Student implements Serializable {
         return this.firstName;
     }
 
-    public String getLasttName() {
+    public String getLastName() {
         return this.lastName;
     }
 
@@ -38,7 +38,7 @@ public class Student implements Serializable {
         this.firstName = firstName;
     }
 
-    public void setLasttName(String lastName) {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
