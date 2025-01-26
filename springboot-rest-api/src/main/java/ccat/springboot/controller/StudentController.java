@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import ccat.springboot.bean.Student;
+import ccat.springboot.controller.exceptions.StudentNotFoundException;
 import ccat.springboot.repository.students.Storage;
 import ccat.springboot.repository.students.inmemory.MapStorage;
 
@@ -118,7 +119,7 @@ public class StudentController {
 
                 Student entry = this.storage.get(student.getId());
                 if (entry != null) {
-                        System.out.println("Student created.");
+                        System.out.println("\nStudent created.\n");
                 }
 
                 return entry;
@@ -134,13 +135,11 @@ public class StudentController {
                 String firstName = student.getFirstName();
                 String lastName = student.getLastName();
 
-                Student oldEntry = this.storage.get(id);
-                if (oldEntry == null) {
-                        System.out.println("Student with id "
-                                        + id + " doesn't exist.");
-                        return null;
+                Boolean ok = this.storage.update(
+                                id, firstName, lastName);
+                if (!ok) {
+                        throw new StudentNotFoundException("Update");
                 }
-                this.storage.update(id, firstName, lastName);
 
                 return student;
         }
