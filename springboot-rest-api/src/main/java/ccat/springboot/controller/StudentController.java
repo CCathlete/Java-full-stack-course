@@ -79,16 +79,20 @@ public class StudentController {
         // Spring boot api with request params.
 
 
-        @GetMapping("/students/query")
+        @GetMapping(value = "/students/query", params = { "id", "firstName", "lastName" })
         public Student studentRequestVariable(
                         @RequestParam("id") int studentId,
                         @RequestParam("firstName") String studentFirstName,
                         @RequestParam("lastName") String studentLastName) {
 
                 Student student = this.storage.get(studentId);
-                if (student.getFirstName().equals(studentFirstName))
+                System.out.println("Student id: " + student.getId());
+                System.out.println("Student first name: " + student.getFirstName());
+                System.out.println("Student last name: " + student.getLastName());
+
+                if (!student.getFirstName().equals(studentFirstName))
                         return null;
-                if (student.getLastName().equals(studentLastName))
+                if (!student.getLastName().equals(studentLastName))
                         return null;
 
                 return student;
