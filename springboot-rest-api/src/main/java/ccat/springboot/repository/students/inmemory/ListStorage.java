@@ -19,7 +19,7 @@ public class ListStorage
 
     public Boolean add(int id, String firstName, String lastName) {
 
-        if (students.contains(id)) {
+        if (students.contains(students.get(id))) {
             System.out.println("Student with id " + id +
                     " already exists.");
             return false;
