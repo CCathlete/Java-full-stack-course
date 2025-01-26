@@ -1,17 +1,17 @@
 package ccat.springboot.repository.students.inmemory;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import ccat.springboot.bean.Student;
 
-public class ListStorage
+public class MapStorage
         implements ccat.springboot.repository.students.Storage {
 
-    private List<Student> students;
+    private Map<Integer, Student> students;
 
-    public ListStorage() {
-        this.students = new ArrayList<>();
+    public MapStorage() {
+        this.students = new HashMap<>();
     }
 
     // -----------------------------------------------------------------
@@ -19,13 +19,13 @@ public class ListStorage
 
     public Boolean add(int id, String firstName, String lastName) {
 
-        if (students.contains(id)) {
+        if (students.containsKey(id)) {
             System.out.println("Student with id " + id +
                     " already exists.");
             return false;
         }
 
-        students.add(new Student(id, firstName, lastName));
+        students.put(id, new Student(id, firstName, lastName));
         return true;
 
     }
@@ -33,8 +33,6 @@ public class ListStorage
     // -----------------------------------------------------------------
 
 
-    // This needs fixing. We need to search the entire list for the id since
-    // the student id doesn't necessarily corresponds to the index in the list.
     public Student get(int id) {
 
         return students.get(id);
@@ -71,12 +69,12 @@ public class ListStorage
             if (!lastName.isBlank())
                 student.setLastName(lastName);
         } else {
-            System.out.println("Student with id " + id + " not found.");
+            System.out.println("Update: Student with id "
+                    + id + " not found.");
             return false;
         }
 
         return true;
-
     }
 
     // -----------------------------------------------------------------

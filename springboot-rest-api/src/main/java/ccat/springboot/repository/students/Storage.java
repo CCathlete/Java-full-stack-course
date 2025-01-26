@@ -4,19 +4,26 @@ import ccat.springboot.bean.Student;
 
 public interface Storage {
 
-    public void add(int id, String firstName, String lastName);
+    public Boolean add(int id, String firstName, String lastName);
+
 
     public Student get(int id);
 
-    public void delete(int id);
 
-    public void update(int id, String firstName, String lastName);
+    public Boolean delete(int id);
 
-    public void clear();
+
+    public Boolean update(int id, String firstName, String lastName);
+
+
+    public Boolean clear();
+
 
     public void printAll();
 
+
     public void printKeys();
+
 
     public void printSize();
 
