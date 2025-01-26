@@ -16,4 +16,13 @@ public class GlobalHandler {
 
     }
 
+
+    @ExceptionHandler(StudentAlreadyExistsException.class)
+    public ResponseEntity<String> handleStudentStudentAlreadyExists(StudentAlreadyExistsException e) {
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(
+                e.getMessage());
+
+    }
+
 }

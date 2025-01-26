@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import ccat.springboot.bean.Student;
+import ccat.springboot.controller.exceptions.StudentAlreadyExistsException;
 import ccat.springboot.controller.exceptions.StudentNotFoundException;
 import ccat.springboot.repository.students.Storage;
 import ccat.springboot.repository.students.inmemory.MapStorage;
@@ -107,9 +108,7 @@ public class StudentController {
         public Student createStudent(@RequestBody Student student) {
                 int id = student.getId();
                 if (this.storage.get(id) != null) {
-                        System.out.println("Student with id " + id
-                                        + " already exists.");
-                        return null;
+                        throw new StudentAlreadyExistsException("Create");
                 }
 
                 this.storage.add(
