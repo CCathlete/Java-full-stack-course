@@ -3,6 +3,8 @@ package ccat.springboot.controller;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ccat.springboot.bean.Student;
 import ccat.springboot.controller.exceptions.StudentAlreadyExistsException;
+import ccat.springboot.controller.exceptions.StudentNotDeletedException;
 import ccat.springboot.controller.exceptions.StudentNotFoundException;
 import ccat.springboot.repository.students.Storage;
 import ccat.springboot.repository.students.inmemory.MapStorage;
@@ -27,63 +30,49 @@ public class StudentController {
                 // This implementation of storage can change later since Storage is an
                 // interface.
                 this.storage = new MapStorage();
-                this.storage.add(
-                                1,
-                                "John",
-                                "Doe");
+                this.storage.add(1, "John", "Doe");
         }
 
 
         @GetMapping("/student")
-        public Student getStudent() {
-                return new Student(
-                                1,
-                                "John",
-                                "Doe");
+        public ResponseEntity<Student> getStudent() {
+                Student student = new Student(1, "John", "Doe");
+
+                return ResponseEntity.status(HttpStatus.OK).body(student);
         }
 
 
         @GetMapping("/students-list")
-        public List<Student> getStudents() {
-                return List.of(
-                                new Student(
-                                                1,
-                                                "John",
-                                                "Doe"),
-                                new Student(
-                                                2,
-                                                "Jane",
-                                                "Doe"),
-                                new Student(
-                                                3,
-                                                "Jack",
-                                                "Doe"));
+        public ResponseEntity<List<Student>> getStudents() {
+                List<Student> students = List.of(new Student(1, "John", "Doe"), new Student(2, "Jane", "Doe"),
+                                new Student(3, "Jack", "Doe"));
+
+                return ResponseEntity.status(HttpStatus.OK).body(students);
         }
 
         // Spring boot api with a path variable.
 
 
         @GetMapping("/students/{id}/{first-name}/{last-name}")
-        public Student studentPathVariable(
-                        @PathVariable("id") int studentId,
-                        @PathVariable("first-name") String firstName,
-                        @PathVariable("last-name") String lastName) {
+        public ResponseEntity<?> studentPathVariable(@PathVariable("id") int studentId,
+                        @PathVariable("first-name") String firstName, @PathVariable("last-name") String lastName) {
 
                 Student student = this.storage.get(studentId);
+                // Alternative to creating exceptions.
                 if (!student.getFirstName().equals(firstName))
-                        return null;
-                if (!student.getLastName().equals(lastName))
-                        return null;
+                        return ResponseEntity.status(HttpStatus.CONFLICT).body("First name incorrect.");
 
-                return student;
+                if (!student.getLastName().equals(lastName))
+                        return ResponseEntity.status(HttpStatus.CONFLICT).body("Last name incorrect.");
+
+                return ResponseEntity.ok(student);
         }
 
         // Spring boot api with request params.
 
 
         @GetMapping(value = "/students/query", params = { "id", "firstName", "lastName" })
-        public Student studentRequestVariable(
-                        @RequestParam("id") int studentId,
+        public ResponseEntity<?> studentRequestVariable(@RequestParam("id") int studentId,
                         @RequestParam("firstName") String studentFirstName,
                         @RequestParam("lastName") String studentLastName) {
 
@@ -93,11 +82,12 @@ public class StudentController {
                 System.out.println("Student last name: " + student.getLastName());
 
                 if (!student.getFirstName().equals(studentFirstName))
-                        return null;
-                if (!student.getLastName().equals(studentLastName))
-                        return null;
+                        return ResponseEntity.status(HttpStatus.CONFLICT).body("First name incorrect.");
 
-                return student;
+                if (!student.getLastName().equals(studentLastName))
+                        return ResponseEntity.status(HttpStatus.CONFLICT).body("Last name incorrect.");
+
+                return ResponseEntity.ok(student);
         }
 
         // Spring boot api that handles HTTP POST requests.
@@ -105,43 +95,50 @@ public class StudentController {
 
         @PostMapping("/students/create")
         @ResponseStatus(code = HttpStatus.CREATED)
-        public Student createStudent(@RequestBody Student student) {
+        public ResponseEntity<?> createStudent(@RequestBody Student student) {
                 int id = student.getId();
                 if (this.storage.get(id) != null) {
                         throw new StudentAlreadyExistsException("Create");
                 }
 
-                this.storage.add(
-                                id,
-                                student.getFirstName(),
-                                student.getLastName());
+                this.storage.add(id, student.getFirstName(), student.getLastName());
 
                 Student entry = this.storage.get(student.getId());
                 if (entry != null) {
                         System.out.println("\nStudent created.\n");
                 }
 
-                return entry;
+                return ResponseEntity.ok(entry);
         }
 
+
         // Spring boot api that handles HTTP put requests.
-
-
         @PutMapping("/students/update")
-        public Student updateStudent(@RequestBody Student student) {
+        public ResponseEntity<?> updateStudent(@RequestBody Student student) {
 
                 int id = student.getId();
                 String firstName = student.getFirstName();
                 String lastName = student.getLastName();
 
-                Boolean ok = this.storage.update(
-                                id, firstName, lastName);
+                Boolean ok = this.storage.update(id, firstName, lastName);
                 if (!ok) {
                         throw new StudentNotFoundException("Update");
                 }
 
-                return student;
+                // If ok, the updated student will look like our input.
+                return ResponseEntity.ok(student);
+        }
+
+
+        // Spring boot api that handles HTTP delete requests.
+        @DeleteMapping("/students/delete/{id}")
+        public ResponseEntity<?> deleteStudent(@PathVariable("id") int studentId) {
+
+                Boolean ok = this.storage.delete(studentId);
+                if (!ok) {
+                        throw new StudentNotDeletedException("Delete");
+                }
+
+                return ResponseEntity.ok("Student with id " + studentId + " deleted.");
         }
 }
-
-// Spring boot api that handles HTTP delete requests.

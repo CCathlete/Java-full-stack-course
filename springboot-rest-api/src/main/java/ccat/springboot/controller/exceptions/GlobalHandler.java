@@ -11,8 +11,7 @@ public class GlobalHandler {
     @ExceptionHandler(StudentNotFoundException.class)
     public ResponseEntity<String> handleStudentNotFound(StudentNotFoundException e) {
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 
     }
 
@@ -20,9 +19,15 @@ public class GlobalHandler {
     @ExceptionHandler(StudentAlreadyExistsException.class)
     public ResponseEntity<String> handleStudentStudentAlreadyExists(StudentAlreadyExistsException e) {
 
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(
-                e.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
 
+    }
+
+
+    @ExceptionHandler(StudentNotDeletedException.class)
+    public ResponseEntity<String> handleStudentNotDeletedEntity(StudentNotDeletedException e) {
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
     }
 
 }
