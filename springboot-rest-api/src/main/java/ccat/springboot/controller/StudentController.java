@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +23,7 @@ import ccat.springboot.repository.students.Storage;
 import ccat.springboot.repository.students.inmemory.MapStorage;
 
 @RestController
+@RequestMapping("students")
 public class StudentController {
 
         private Storage storage;
@@ -34,7 +36,7 @@ public class StudentController {
         }
 
 
-        @GetMapping("/student")
+        @GetMapping("example-student")
         public ResponseEntity<Student> getStudent() {
                 Student student = new Student(1, "John", "Doe");
 
@@ -42,7 +44,7 @@ public class StudentController {
         }
 
 
-        @GetMapping("/students-list")
+        @GetMapping("example-list")
         public ResponseEntity<List<Student>> getStudents() {
                 List<Student> students = List.of(new Student(1, "John", "Doe"), new Student(2, "Jane", "Doe"),
                                 new Student(3, "Jack", "Doe"));
@@ -50,10 +52,9 @@ public class StudentController {
                 return ResponseEntity.status(HttpStatus.OK).body(students);
         }
 
+
         // Spring boot api with a path variable.
-
-
-        @GetMapping("/students/{id}/{first-name}/{last-name}")
+        @GetMapping("{id}/{first-name}/{last-name}")
         public ResponseEntity<?> studentPathVariable(@PathVariable("id") int studentId,
                         @PathVariable("first-name") String firstName, @PathVariable("last-name") String lastName) {
 
@@ -71,7 +72,7 @@ public class StudentController {
         // Spring boot api with request params.
 
 
-        @GetMapping(value = "/students/query", params = { "id", "firstName", "lastName" })
+        @GetMapping(value = "query", params = { "id", "firstName", "lastName" })
         public ResponseEntity<?> studentRequestVariable(@RequestParam("id") int studentId,
                         @RequestParam("firstName") String studentFirstName,
                         @RequestParam("lastName") String studentLastName) {
@@ -93,7 +94,7 @@ public class StudentController {
         // Spring boot api that handles HTTP POST requests.
 
 
-        @PostMapping("/students/create")
+        @PostMapping("create")
         @ResponseStatus(code = HttpStatus.CREATED)
         public ResponseEntity<?> createStudent(@RequestBody Student student) {
                 int id = student.getId();
@@ -113,7 +114,7 @@ public class StudentController {
 
 
         // Spring boot api that handles HTTP put requests.
-        @PutMapping("/students/update")
+        @PutMapping("update")
         public ResponseEntity<?> updateStudent(@RequestBody Student student) {
 
                 int id = student.getId();
@@ -131,7 +132,7 @@ public class StudentController {
 
 
         // Spring boot api that handles HTTP delete requests.
-        @DeleteMapping("/students/delete/{id}")
+        @DeleteMapping("delete/{id}")
         public ResponseEntity<?> deleteStudent(@PathVariable("id") int studentId) {
 
                 Boolean ok = this.storage.delete(studentId);
