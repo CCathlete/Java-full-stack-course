@@ -1,6 +1,22 @@
-import { JSX } from "react";
+import React, { JSX } from "react";
 
-interface GreetingProps
+type greetingProps =
+  {
+    name: string;
+  };
+
+class Greeting extends React.Component<greetingProps, {}>
 {
-  name: string;
+
+  constructor ( props: greetingProps )
+  {
+    super( props );
+  }
+  render(): React.ReactNode
+  {
+    return <h2>Hi { this.props.name },
+      this is my greeting class!</h2>;
+  }
 }
+
+export { Greeting };

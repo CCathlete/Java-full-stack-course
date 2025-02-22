@@ -2,6 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Welcome from './components/welcome';
+import { Greeting } from './components/greeting';
 
 function App()
 {
@@ -9,6 +10,7 @@ function App()
     <div className="App">
       <header className="App-header">
         <Welcome name='Bubu' />
+        <Greeting name='Biboo' />
         <img src={ logo } className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
