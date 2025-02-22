@@ -4,6 +4,7 @@ import './App.css';
 import Welcome from './components/Welcome';
 import { Greeting } from './components/Greeting';
 import { Student, StudentProps } from './components/Student';
+import { Employee } from './components/Employee';
 
 function App()
 {
@@ -19,6 +20,9 @@ function App()
         <Greeting name='Biboo' />
         <Student
           { ...data }
+        />
+        <Employee
+          { ...data } position='Developer'
         />
         <img src={ logo } className="App-logo" alt="logo" />
         <p>
