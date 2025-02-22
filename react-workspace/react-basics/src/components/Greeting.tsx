@@ -5,7 +5,7 @@ type greetingProps =
     name: string;
   };
 
-class Greeting extends React.Component<greetingProps, {}>
+export class Greeting extends React.Component<greetingProps, {}>
 {
 
   constructor ( props: greetingProps )
@@ -18,5 +18,3 @@ class Greeting extends React.Component<greetingProps, {}>
       this is my greeting class!</h2>;
   }
 }
-
-export { Greeting };
