@@ -31,10 +31,15 @@ export const ConditionalRendering = (): JSX.Element =>
     <div>
       <h1>Conditional Rendering Example</h1>
       {/* <Component /> */ }
-      {
+      {/* {
         // A ternary operation, if isLoggedIn is true, then welcome 
         // user, else please log in.
         isLoggedIn ? <p>Hemlo user!</p> : <p>Please log in.</p>
+      } */}
+      {
+        // Using short circuit with logical AND
+        ( isLoggedIn && <p>Hemlo to you!</p> ) ||
+        <p>Please log in.</p>
       }
       <button onClick={ handleLogIn }>Log In</button>
       <button onClick={ handleLogOut }>Log Out</button>
