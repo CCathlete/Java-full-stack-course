@@ -1,32 +1,32 @@
 version: "3.9"
 
 services:
-  # Our mysql database
-  db: # The service will be named db.
-    image: postgres:14.15-alpine3.21
-    restart: always # Always try to restart if this stops running.
-    environment: # Provide environment variables. Format VAR: value.
-      POSTGRES_USER: ${DB_USER}
-      # POSTGRES_PASSWORD: feedthemsibsandpellots
-      POSTGRES_PASSWORD: ${DB_PASS}
-      POSTGRES_DB: ${DB_NAME}
-    ports: # Exposing ports for apps outside the docker-compose.
-      - "${DB_PORT}:5432" # Format is hostPort:containerPort <=> outside:inside.
+  # MySQL database
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_ROOT_PASSWORD: ${DB_PASS}  # Root password is required for MySQL
+    ports:
+      - "${DB_PORT}:3306"
     volumes:
-      - spring_boot_1:/var/lib/postgresql/data
+      - spring_boot_1:/var/lib/mysql
     networks:
       - spring_boot_1_net
 
-  # Adminer provides a nice web UI to connect to databases.
+  # Adminer for database UI
   adminer:
     image: adminer
     restart: always
     environment:
-      ADMINER_DESIGN: dracula # Theme (https://github.com/vrana/adminer/tree/master/designs)
+      ADMINER_DESIGN: dracula
     ports: 
       - 3333:8080
     networks:
-      - backend_masterclass_net
+      - spring_boot_1_net
 
 networks:
   spring_boot_1_net:
