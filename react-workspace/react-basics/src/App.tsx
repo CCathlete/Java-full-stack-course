@@ -6,6 +6,7 @@ import { Greeting } from './components/Greeting';
 import { Student, StudentProps } from './components/Student';
 import { Employee } from './components/Employee';
 import { User, UserProps } from './components/User';
+import { EventHandling } from './components/EventHandling';
 
 function App()
 {
@@ -31,6 +32,7 @@ function App()
           { ...data } position='Developer'
         />
         <User { ...userData as UserProps } />
+        <EventHandling />
         <img src={ logo } className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
