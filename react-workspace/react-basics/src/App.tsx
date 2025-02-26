@@ -7,6 +7,7 @@ import { Student, StudentProps } from './components/Student';
 import { Employee } from './components/Employee';
 import { User, UserProps } from './components/User';
 import { EventHandling } from './components/EventHandling';
+import { ConditionalRendering } from './components/ConditionalRendering';
 
 function App()
 {
@@ -24,6 +25,7 @@ function App()
     <div className="App">
       <header className="App-header">
         <Welcome name='Bubu' />
+        <ConditionalRendering />
         <Greeting name='Biboo' />
         <Student
           { ...data }
