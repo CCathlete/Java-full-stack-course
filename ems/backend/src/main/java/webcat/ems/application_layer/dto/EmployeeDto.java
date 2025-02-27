@@ -9,11 +9,15 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-/*
- * private Long id;
- * private String firstName;
- * private String lastName;
- * private String email;
+/**
+ * @param private
+ *          Long id;
+ * @param private
+ *          String firstName;
+ * @param private
+ *          String lastName;
+ * @param private
+ *          String email;
  */
 public class EmployeeDto {
 
