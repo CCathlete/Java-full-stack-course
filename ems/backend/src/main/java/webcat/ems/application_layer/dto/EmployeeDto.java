@@ -5,20 +5,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * <p>
+ * Data Transfer Object for
+ * </p>
+ * <p>
+ * {@link webcat.ems.domain_layer.entities.Employee}.
+ * </p>
+ */
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-/**
- * @param private
- *          Long id;
- * @param private
- *          String firstName;
- * @param private
- *          String lastName;
- * @param private
- *          String email;
- */
 public class EmployeeDto {
 
   private Long id;

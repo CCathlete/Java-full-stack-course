@@ -11,6 +11,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Represents an employee in the company.
+ * <p>
+ * Fields:
+ * <ul>
+ * <li>(Long) id</li>
+ * <li>(String) firstName</li>
+ * <li>(String) lastName</li>
+ * <li>(String) email</li>
+ * </ul>
+ * </p>
+ */
 @Getter
 @Setter
 @NoArgsConstructor
