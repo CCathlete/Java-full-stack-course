@@ -1,4 +1,4 @@
-package webcat.ems.domain_layer.model.entities;
+package webcat.ems.domain_layer.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

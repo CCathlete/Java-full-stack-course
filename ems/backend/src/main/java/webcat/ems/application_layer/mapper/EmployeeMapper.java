@@ -1,7 +1,7 @@
-package webcat.ems.application_layer.exceptions;
+package webcat.ems.application_layer.mapper;
 
+import webcat.ems.domain_layer.entities.Employee;
 import webcat.ems.application_layer.dto.EmployeeDto;
-import webcat.ems.domain_layer.model.entities.Employee;
 
 public class EmployeeMapper {
 
